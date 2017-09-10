@@ -119,16 +119,16 @@ public class MainGetResidueMappingController {
             if (id.length() == 6 && id.split("_").length != 2) {// Accession:
                 // P04637
                 if (positionList == null) {
-                    outList.addAll(seqController.getPdbResidueByUniprotAccession(id));
+                    outList.addAll(seqController.getPdbResidueByUniprotAccessionIso(id,"1"));
                 } else {
-                    outList.addAll(seqController.getPdbResidueByUniprotAccession(id, positionList));
+                    outList.addAll(seqController.getPdbResidueByUniprotAccessionIso(id,"1", positionList));
                 }
 
             } else if (id.split("_").length == 2) {// ID: P53_HUMAN
                 if (positionList == null) {
-                    outList.addAll(seqController.getPdbResidueByUniprotId(id));
+                    outList.addAll(seqController.getPdbResidueByUniprotIdIso(id,"1"));
                 } else {
-                    outList.addAll(seqController.getPdbResidueByUniprotId(id, positionList));
+                    outList.addAll(seqController.getPdbResidueByUniprotIdIso(id,"1", positionList));
                 }
 
             } else {
@@ -278,17 +278,14 @@ public class MainGetResidueMappingController {
             if (id.length() == 6 && id.split("_").length != 2) {// Accession:
                 // P04637
 
-                List<Uniprot> uniprotList = uniprotRepository.findByUniprotAccession(id);
                 List<Alignment> list = new ArrayList<Alignment>();
-                for (Uniprot entry : uniprotList) {
 
                     if (positionList == null) {
-                        list = seqController.getPdbResidueBySeqId(entry.getSeqId());
+                        list = seqController.getPdbResidueByUniprotAccessionIso(id,"1");
                     } else {
-                        list = seqController.getPdbResidueBySeqId(entry.getSeqId(), positionList);
+                        list = seqController.getPdbResidueByUniprotAccessionIso(id,"1", positionList);
                     }
 
-                }
                 for (Alignment re : list) {
                     String pd = re.getPdbId().toLowerCase();
                     String ch = re.getChain().toLowerCase();
@@ -299,29 +296,18 @@ public class MainGetResidueMappingController {
 
             } else if (id.split("_").length == 2) {// ID: P53_HUMAN
 
-                List<Uniprot> uniprotList = uniprotRepository.findByUniprotId(id);
-
-                Set<String> uniprotAccSet = new HashSet<String>();
-                for (Uniprot uniprot : uniprotList) {
-                    uniprotAccSet.add(uniprot.getUniprotAccession());
+		List<Alignment> list = null;
+                if (positionList == null) {
+                    list = seqController.getPdbResidueByUniprotIdIso(id,"1");
+                } else {
+                    list = seqController.getPdbResidueByUniprotIdIso(id,"1", positionList);
                 }
 
-                List<Alignment> outlist = new ArrayList<Alignment>();
-                Iterator<String> it = uniprotAccSet.iterator();
-                while (it.hasNext()) {
-                    if (positionList == null) {
-                        outlist.addAll(seqController.getPdbResidueByUniprotAccession(it.next()));
-                    } else {
-                        outlist.addAll(seqController.getPdbResidueByUniprotAccession(it.next(), positionList));
-                    }
-
-                }
-
-                for (Alignment residue : outlist) {
-                    String pd = residue.getPdbId().toLowerCase();
-                    String ch = residue.getChain().toLowerCase();
+                for (Alignment re : list) {
+                    String pd = re.getPdbId().toLowerCase();
+                    String ch = re.getChain().toLowerCase();
                     if (pd.equals(pdb_id.toLowerCase()) && ch.equals(chain_id.toLowerCase())) {
-                        outList.add(residue);
+                        outList.add(re);
                     }
                 }
 
