@@ -4,7 +4,7 @@
 	layout:decorator="layout">
 <body>
 	<h1 layout:fragment="header">G2S (Genome to Structure)</h1>
-	<div layout:fragment="content" class="container">
+	<div layout:fragment="content" class="container-fluid">
 		<h2>
 			<p> An auto-updating web-service to annotate genomic variants on
 				protein structures</p>
@@ -15,9 +15,9 @@
 			sequencing efforts in the context of 3D protein structures. Several
 			tools have been developed to address the need, including SIFTS (<a
 				href="https://www.ebi.ac.uk/pdbe/docs/sifts/">https://www.ebi.ac.uk/pdbe/docs/sifts/</a>)
-			[1], a service by PDB (<a
+			, a service by PDB (<a
 				href="http://www.rcsb.org/pdb/chromosome.do">http://www.rcsb.org/pdb/chromosome.do</a>)
-			[2], and G23D (<a href="http://www.sheba-cancer.org.il/G23D">http://www.sheba-cancer.org.il/G23D</a>)[3].
+			, and G23D (<a href="http://www.sheba-cancer.org.il/G23D">http://www.sheba-cancer.org.il/G23D</a>).
 			However, none of them provides a web service that support automated
 			analysis programmatically. 
 		</p>
@@ -58,7 +58,7 @@
 			This web service was initially designed and implemented for mapping
 			and visualizing cancer mutations in the cBioPortal, a leading
 			resource for studying cancer genomics (<a
-				href="http://www.cbioportal.org/">http://www.cbioportal.org/</a>)[4].
+				href="http://www.cbioportal.org/">http://www.cbioportal.org/</a>).
 			The cBioPortal has been used by thousands of researchers (currently
 			there are in average about 3,000 visit daily), mostly individuals
 			outside of the authors’ group. Recently, we separated and generalized
@@ -69,26 +69,6 @@
 			open-source and available at <a
 				href="https://github.com/cBioPortal/pdb-annotation">GitHub</a>.
 		</p>
-		<li>References:
-			<ul>
-				<li>1.Velankar S, Dana JM, Jacobsen J, van Ginkel G, Gane PJ,
-					Luo J, Oldfield TJ, O'Donovan C, Martin MJ, Kleywegt GJ. SIFTS:
-					Structure Integration with Function, Taxonomy and Sequences
-					resource. Nucleic Acids Res. 2013 Jan;41(Database issue):D483-9.</li>
-				<li>2.Berman HM, Westbrook J, Feng Z, Gilliland G, Bhat TN,
-					Weissig H, Shindyalov IN, Bourne PE. The Protein Data Bank. Nucleic
-					Acids Research. 2000;28: 235-242.</li>
-				<li>3.Solomon O, Kunik V, Simon A, Kol N, Barel O, Lev A,
-					Amariglio N, Somech R, Rechavi G, Eyal E. G23D: Online tool for
-					mapping and visualization of genomic variants on 3D protein
-					structures. BMC Genomics. 2016 Aug 26;17:681.</li>
-				<li>4.Cerami E, Gao J, Dogrusoz U, Gross BE, Sumer SO, Aksoy
-					BA, Jacobsen A, Byrne CJ, Heuer ML, Larsson E, Antipin Y. The cBio
-					cancer genomics portal: an open platform for exploring
-					multidimensional cancer genomics data. Cancer Discovery. 2012 May
-					1;2(5):401-4.</li>
-			</ul>
-		</li>
 	</div>
 </body>
 </html>
