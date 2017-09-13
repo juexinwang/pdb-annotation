@@ -1,8 +1,16 @@
 package org.cbioportal.pdb_annotation.web;
 
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import springfox.documentation.builders.PathSelectors;
@@ -16,15 +24,27 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * 
  * @author Juexin Wang
  *
- */
+ */ 
 @SpringBootApplication
 @SpringBootConfiguration
 @EnableSwagger2
-public class Application {
+public class Application extends SpringBootServletInitializer{
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Application.class, args);
+    }
+
+    /*
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
+    */
+    
 
     @Bean
     public Docket annotationApi() {
@@ -53,5 +73,36 @@ public class Application {
                 "https://github.com/cBioPortal/cbioportal/blob/master/LICENSE");
         return apiInfo;
     }
-
+    
+    
+  //http to https
+    /*
+    @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+      TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
+          @Override
+          protected void postProcessContext(Context context) {
+            SecurityConstraint securityConstraint = new SecurityConstraint();
+            securityConstraint.setUserConstraint("CONFIDENTIAL");
+            SecurityCollection collection = new SecurityCollection();
+            collection.addPattern("/*");
+            securityConstraint.addCollection(collection);
+            context.addConstraint(securityConstraint);
+          }
+        };
+      
+      tomcat.addAdditionalTomcatConnectors(initiateHttpConnector());
+      return tomcat;
+    }
+    
+    private Connector initiateHttpConnector() {
+      Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+      connector.setScheme("http");
+      connector.setPort(8080);
+      connector.setSecure(false);
+      connector.setRedirectPort(8443);
+      
+      return connector;
+    }
+    */
 }
