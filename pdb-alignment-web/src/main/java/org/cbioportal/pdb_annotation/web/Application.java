@@ -76,7 +76,7 @@ public class Application extends SpringBootServletInitializer{
     
     
   //http to https
-    /*
+    
     @Bean
     public EmbeddedServletContainerFactory servletContainer() {
       TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
@@ -104,5 +104,5 @@ public class Application extends SpringBootServletInitializer{
       
       return connector;
     }
-    */
+    
 }
