@@ -91,10 +91,10 @@ public class MainGetAlignmentsController {
         } else if (id_type.equals("uniprot")) {
             if (id.length() == 6 && id.split("_").length != 2) {// Accession:
                 // P04637
-                outList.addAll(seqController.getPdbAlignmentByUniprotAccession(id));
+                outList.addAll(seqController.getPdbAlignmentByUniprotAccessionIso(id,"1"));
 
             } else if (id.split("_").length == 2) {// ID: P53_HUMAN
-                outList.addAll(seqController.getPdbAlignmentByUniprotId(id));
+                outList.addAll(seqController.getPdbAlignmentByUniprotIdIso(id,"1"));
             } else {
                 log.info("Error in Input. id_type:Uniprot id: " + id);
             }
@@ -183,10 +183,10 @@ public class MainGetAlignmentsController {
         } else if (id_type.equals("uniprot")) {
             if (id.length() == 6 && id.split("_").length != 2) {// Accession:
                 // P04637
-                outList.addAll(seqController.getPdbAlignmentByUniprotAccession(id, pdb_id, chain_id));
+                outList.addAll(seqController.getPdbAlignmentByUniprotAccessionIso(id, "1", pdb_id, chain_id));
 
             } else if (id.split("_").length == 2) {// ID: P53_HUMAN
-                outList.addAll(seqController.getPdbAlignmentByUniprotId(id, pdb_id, chain_id));
+                outList.addAll(seqController.getPdbAlignmentByUniprotIdIso(id, "1", pdb_id, chain_id));
             } else {
                 log.info("Error in Input. id_type:Uniprot id: " + id + " By PDB:" + pdb_id + " id:" + chain_id);
             }
