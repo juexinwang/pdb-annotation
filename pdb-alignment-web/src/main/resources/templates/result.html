@@ -59,7 +59,7 @@
 						th:text="${residue.positivePercentage}+${residue.positivePercentageStr}">1</td>
 					<td th:text="${residue.gapPercentage}+${residue.gapPercentageStr}">1</td>
 					<td><a
-						th:href="@{'http://www.rcsb.org/pdb/pv/pv.do'(pdbid=${residue.pdbId}, highlight=${residue.chain}+':'+${residue.residueNum})}"><p
+						th:href="@{'http://www.rcsb.org/pdb/ngl/ngl.do'(pdbid=${residue.pdbId}, highlight=${residue.chain}+':'+${residue.residueNum})}"><p
 								th:text="${residue.residueNum}"></p></a></td>
 					<td th:text="${residue.residueName}">1</td>
 
