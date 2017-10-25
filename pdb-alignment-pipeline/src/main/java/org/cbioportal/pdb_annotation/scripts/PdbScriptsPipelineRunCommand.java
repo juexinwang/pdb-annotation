@@ -86,12 +86,18 @@ public class PdbScriptsPipelineRunCommand {
         log.info(
                 "[Download] A cloned copy of whole PDB will be downloaded and parse to sequences, unziped and parsing to get the PDB sequences");
         PdbSequenceUtil pu = new PdbSequenceUtil();
-        pu.initSequencefromFolder("/home/wangjue/gsoc/pdb_all/pdb",
-                ReadConfig.workspace + ReadConfig.pdbSeqresDownloadFile);
+        
+        //Choice 1/3: Parsing from specific folder
+        //pu.initSequencefromFolder("/home/wangjue/gsoc/pdb_all/pdb",
+        //       ReadConfig.workspace + ReadConfig.pdbSeqresDownloadFile);
+        
+        //Choice 2/3: Sync all the pdb in java code
         // pu.initSequencefromFolder("/home/wangjue/gsoc/testpdb/test",ReadConfig.workspace
         // + ReadConfig.pdbSeqresDownloadFile);
-        // pu.initSequencefromAll(ReadConfig.pdbRepo, ReadConfig.workspace +
-        // ReadConfig.pdbSeqresDownloadFile);
+        
+        //Choice 3/3: Parsing all the pdb from pdbRepo
+        pu.initSequencefromAll(ReadConfig.pdbRepo, ReadConfig.workspace +
+                ReadConfig.pdbSeqresDownloadFile);
 
         // Step 2:
         log.info("********************[STEP 2]********************");
@@ -173,6 +179,7 @@ public class PdbScriptsPipelineRunCommand {
         this.seqFileCount = preprocess.preprocessGENEsequences(uniqSeqHm,
                 ReadConfig.workspace + ReadConfig.seqFastaFile);
 
+        
         // Step 5:
         log.info("********************[STEP 5]********************");
         log.info("[PrepareBlast] Build the database by makeblastdb");
@@ -200,6 +207,7 @@ public class PdbScriptsPipelineRunCommand {
             cu.runCommand("blastp", paralist);
         }
 
+        
         PdbScriptsPipelineMakeSQL parseprocess = new PdbScriptsPipelineMakeSQL(this);
 
         // Step 7:
