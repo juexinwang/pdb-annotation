@@ -21,6 +21,7 @@ public class PdbScriptsPipelineStarter {
     public static final String INITIALIZE_DATABASE_COMMAND = "init";
     public static final String WEEKLY_UPDATE_COMMAND = "updateweekly";
     public static final String IMMEDIATE_UPDATE_COMMAND = "update";
+    public static final String INITIALIZE_ANNOTATION_COMMAND = "annotate";
 
     /**
      * main function, run the commands
@@ -75,6 +76,12 @@ public class PdbScriptsPipelineStarter {
             log.info("[Pipeline] Run Pipleline update immediately");
             app = new PdbScriptsPipelineRunCommand();
             app.runUpdatePDB();
+            break;
+        case INITIALIZE_ANNOTATION_COMMAND:
+            // initialize the annotation database
+            log.info("[Pipeline] Run Pipleline annotation");
+            app = new PdbScriptsPipelineRunCommand();
+            app.runAnnotation();
             break;
         default:
             System.out.println("The argument should be " + INITIALIZE_DATABASE_COMMAND + ", " + WEEKLY_UPDATE_COMMAND

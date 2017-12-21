@@ -72,6 +72,11 @@ public class ReadConfig {
     public static String pdbFastaService;
     public static String mysqlMaxAllowedPacket;
     public static String saveSpaceTag;
+    public static String annotationDir;
+    public static String annotationHg19Avsnp;
+    public static String annotationHg19Dbnsfp;
+    public static String annotationHg38Avsnp;
+    public static String annotationHg38Dbnsfp;
 
     public static boolean isPositiveInteger(String str) {
         return str.matches("\\d+"); // match a number with positive integer.
@@ -155,6 +160,11 @@ public class ReadConfig {
             ReadConfig.pdbFastaService = prop.getProperty("pdb.fastaService").trim();
             ReadConfig.mysqlMaxAllowedPacket = prop.getProperty("mysql_max_allowed_packet").trim();
             ReadConfig.saveSpaceTag = prop.getProperty("saveSpaceTag").trim();
+            ReadConfig.annotationDir = prop.getProperty("annotation.dir").trim();
+            ReadConfig.annotationHg19Avsnp = prop.getProperty("annotation.hg19.avsnp").trim();
+            ReadConfig.annotationHg19Dbnsfp = prop.getProperty("annotation.hg19.dbnsfp").trim();
+            ReadConfig.annotationHg38Avsnp = prop.getProperty("annotation.hg38.avsnp").trim();
+            ReadConfig.annotationHg38Dbnsfp = prop.getProperty("annotation.hg38.dbnsfp").trim();
         } catch (Exception ex) {
             log.error("[CONFIG] Error in Reading application.properties");
             ex.printStackTrace();
@@ -622,5 +632,47 @@ public class ReadConfig {
     public static void setDbHost(String dbHost) {
         ReadConfig.dbHost = dbHost;
     }
+
+    public static String getAnnotationDir() {
+        return annotationDir;
+    }
+
+    public static void setAnnotationDir(String annotationDir) {
+        ReadConfig.annotationDir = annotationDir;
+    }
+
+    public static String getAnnotationHg19Avsnp() {
+        return annotationHg19Avsnp;
+    }
+
+    public static void setAnnotationHg19Avsnp(String annotationHg19Avsnp) {
+        ReadConfig.annotationHg19Avsnp = annotationHg19Avsnp;
+    }
+
+    public static String getAnnotationHg19Dbnsfp() {
+        return annotationHg19Dbnsfp;
+    }
+
+    public static void setAnnotationHg19Dbnsfp(String annotationHg19Dbnsfp) {
+        ReadConfig.annotationHg19Dbnsfp = annotationHg19Dbnsfp;
+    }
+
+    public static String getAnnotationHg38Avsnp() {
+        return annotationHg38Avsnp;
+    }
+
+    public static void setAnnotationHg38Avsnp(String annotationHg38Avsnp) {
+        ReadConfig.annotationHg38Avsnp = annotationHg38Avsnp;
+    }
+
+    public static String getAnnotationHg38Dbnsfp() {
+        return annotationHg38Dbnsfp;
+    }
+
+    public static void setAnnotationHg38Dbnsfp(String annotationHg38Dbnsfp) {
+        ReadConfig.annotationHg38Dbnsfp = annotationHg38Dbnsfp;
+    }
+    
+    
 
 }

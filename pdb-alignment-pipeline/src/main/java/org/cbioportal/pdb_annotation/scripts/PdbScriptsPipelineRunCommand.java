@@ -26,6 +26,7 @@ public class PdbScriptsPipelineRunCommand {
     private int matches;
     private int seqFileCount;
     private boolean updateTag;
+    private String genomeVersion;
 
     /**
      * Constructor
@@ -34,7 +35,18 @@ public class PdbScriptsPipelineRunCommand {
         this.matches = 0;
         this.seqFileCount = -1;
         this.updateTag = false;
+    }   
+    
+    public String getGenomeVersion() {
+        return genomeVersion;
     }
+
+
+    public void setGenomeVersion(String genomeVersion) {
+        this.genomeVersion = genomeVersion;
+    }
+
+
 
     public BlastDataBase getDb() {
         return db;
@@ -527,5 +539,25 @@ public class PdbScriptsPipelineRunCommand {
             cu.runCommand("gzip", paralist);
         }
 
+    }
+    
+    
+    /**
+     * parse and annotate annotation
+     */
+    public void runAnnotation(){
+        
+        AnnotationMakeSQL parseprocess = new AnnotationMakeSQL(this);
+        CommandProcessUtil cu = new CommandProcessUtil();
+        
+        parseprocess.generateAnnotationAvSnp();       
+        ArrayList<String> paralist = new ArrayList<String>();
+        String Filename="";
+        paralist.add(Filename);
+        cu.runCommand("mysql", paralist);
+        
+        //TODO
+        //You can add dbNSFP here
+        
     }
 }
