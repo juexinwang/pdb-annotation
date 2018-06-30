@@ -396,8 +396,8 @@ public class SeqIdAlignmentController {
             }
         }
 
-        if (grlistValid.size() >= 1) {
-            List<Alignment> outlist = new ArrayList<Alignment>();
+        List<Alignment> outlist = new ArrayList<Alignment>();
+        if (grlistValid.size() >= 1) {           
             for (GenomeResidueInput gr : grlistValid) {
                 // System.out.println("Out:\t" + gr.getEnsembl().getSeqId() +
                 // "\t:"
@@ -405,11 +405,9 @@ public class SeqIdAlignmentController {
                 List<Alignment> list = seqController.getPdbResidueBySeqId(gr.getEnsembl().getSeqId(),
                         Integer.toString(gr.getResidue().getResidueNum()));
                 outlist.addAll(list);
-            }
-            return outlist;
-        } else {
-            return null;
-        }
+            }            
+        } 
+        return outlist;       
     }
 
     // P04637
