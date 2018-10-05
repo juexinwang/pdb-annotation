@@ -240,7 +240,7 @@ public class MainGetResidueMappingController {
 
             } else if (id.startsWith("ENSG")) {// EnsemblGene:
                 // ENSG00000141510.16/ENSG00000141510
-                List<Ensembl> ensembllist = ensemblRepository.findByEnsemblGene(id);
+                List<Ensembl> ensembllist = ensemblRepository.findByEnsemblGeneStartingWith(id);
 
                 if (ensembllist.size() > 0) {
                     List<Alignment> list = null;
@@ -261,7 +261,7 @@ public class MainGetResidueMappingController {
 
             } else if (id.startsWith("ENST")) {// EnsemblTranscript:
                 // ENST00000504290.5/ENST00000504290
-                List<Ensembl> ensembllist = ensemblRepository.findByEnsemblTranscript(id);
+                List<Ensembl> ensembllist = ensemblRepository.findByEnsemblTranscriptStartingWith(id);
                 if (ensembllist.size() > 0) {
                     List<Alignment> list = null;
                     if (positionList == null) {
