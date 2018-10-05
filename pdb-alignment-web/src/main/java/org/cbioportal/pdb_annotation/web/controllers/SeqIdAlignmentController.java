@@ -361,7 +361,16 @@ public class SeqIdAlignmentController {
      * ResidueMapping parts support
      */
 
-    // Implementation of API etPdbResidueByEnsemblIdGenome
+
+    /**
+     * Implementation of API getPdbResidueByEnsemblIdGenome
+     * 
+     * @param chromosomeNum
+     * @param position
+     * @param nucleotideType
+     * @param genomeVersion
+     * @return
+     */
     public List<Alignment> getPdbResidueByEnsemblIdGenome(String chromosomeNum, long position, String nucleotideType,
             String genomeVersion) {
         // Calling GenomeNexus
@@ -369,7 +378,7 @@ public class SeqIdAlignmentController {
 
         List<GenomeResidueInput> grlist = new ArrayList<GenomeResidueInput>();
         try {
-            grlist = uapi.callAPI(chromosomeNum, position, nucleotideType, genomeVersion);
+            grlist = uapi.callHumanGenomeAPI(chromosomeNum, position, nucleotideType, genomeVersion);
         } catch (HttpClientErrorException ex) {
             ex.printStackTrace();
             // org.springframework.web.client.HttpClientErrorException: 400 Bad
@@ -409,6 +418,62 @@ public class SeqIdAlignmentController {
         } 
         return outlist;       
     }
+    
+ 
+    /**
+     * Implementation of API getPdbResidueByEnsemblIddbSNPID
+     * 
+     * @param dbSNPID
+     * @return
+     */
+    public List<Alignment> getPdbResidueByEnsemblIddbSNPID(String dbSNPID) {
+        // Calling GenomeNexus
+        UtilAPI uapi = new UtilAPI();
+
+        List<GenomeResidueInput> grlist = new ArrayList<GenomeResidueInput>();
+        try {
+            grlist = uapi.calldbSNPAPI(dbSNPID);
+        } catch (HttpClientErrorException ex) {
+            ex.printStackTrace();
+            // org.springframework.web.client.HttpClientErrorException: 400 Bad
+            // Request
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        List<GenomeResidueInput> grlistValid = new ArrayList<GenomeResidueInput>();
+        for (GenomeResidueInput gr : grlist) {
+            List<Ensembl> ensembllist = ensemblRepository.findByEnsemblIdStartingWith(gr.getEnsembl().getEnsemblid());
+            // System.out.println(gr.getEnsembl().getEnsemblid());
+
+            for (Ensembl ensembl : ensembllist) {
+                if (geneSequenceRepository.findBySeqId(ensembl.getSeqId()).size() != 0) {
+                    Ensembl es = gr.getEnsembl();
+                    es.setSeqId(ensembl.getSeqId());
+                    // System.out.println("API
+                    // ensemblID:\t"+es.getEnsemblid()+"\t:"+es.getSeqId());
+                    gr.setEnsembl(es);
+                    grlistValid.add(gr);
+                }
+            }
+        }
+
+        List<Alignment> outlist = new ArrayList<Alignment>();
+        if (grlistValid.size() >= 1) {           
+            for (GenomeResidueInput gr : grlistValid) {
+                // System.out.println("Out:\t" + gr.getEnsembl().getSeqId() +
+                // "\t:"
+                // + Integer.toString(gr.getResidue().getResidueNum()));
+                List<Alignment> list = seqController.getPdbResidueBySeqId(gr.getEnsembl().getSeqId(),
+                        Integer.toString(gr.getResidue().getResidueNum()));
+                outlist.addAll(list);
+            }            
+        } 
+        return outlist;       
+    }
+    
+    
 
     // P04637
     public List<Alignment> getPdbResidueByUniprotAccession(String uniprotAccession) {
