@@ -60,12 +60,12 @@ public class MainGetResidueMappingController {
     @ApiOperation("POST PDB Residue Mapping by ProteinId")
     public List<Alignment> postResidueMapping(
             @ApiParam(required = true, value = "Input id_type: ensembl; uniprot;"
-                    + "uniprot_isoform;\n hgvs-grch37; hgvs-grch38; dbSNP_ID") @PathVariable String id_type,
+                    + "uniprot_isoform;\n hgvs-grch37; hgvs-grch38; dbsnp") @PathVariable String id_type,
             @ApiParam(required = true, value = "Input id e.g.\n"
                     + "ensembl:ENSP00000484409.1/ENSG00000141510.16/ENST00000504290.5;\n"
                     + "uniprot:P04637/P53_HUMAN;\n" + "uniprot_isoform:P04637_9/P53_HUMAN_9;\n"
                     + "hgvs-grch37:17:g.79478130C>G;\n" + "hgvs-grch38:17:g.7676594T>G;\n"
-                    + "dbSNP_ID:rs1800369") @PathVariable String id,
+                    + "dbsnp:rs1800369") @PathVariable String id,
             @ApiParam(required = false, value = "Input Residue Positions e.g. 10,100; Anynumber for hgvs;\n"
                     + "Return all residue mappings if none") @RequestParam(required = false) List<String> positionList) {
 
@@ -185,10 +185,10 @@ public class MainGetResidueMappingController {
             outList.addAll(
                     seqController.getPdbResidueByEnsemblIdGenome(chromosomeNum, pos, nucleotideType, genomeVersion));
 
-        } else if (id_type.equals("dbSNP_ID")){
+        } else if (id_type.equals("dbsnp")){
         	// https://www.genomenexus.org/beta/annotation/dbsnp/rs116035550
         	// https://www.genomenexus.org/beta/annotation/dbsnp/dbSNPID
-        	System.out.println("dbSNP_ID: "+id);
+        	System.out.println("dbsnp: "+id);
         	outList.addAll(
                     seqController.getPdbResidueByEnsemblIddbSNPID(id));
         }
@@ -202,12 +202,12 @@ public class MainGetResidueMappingController {
             RequestMethod.GET, RequestMethod.POST }, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Post Residue Mapping by ProteinId, PDBId and Chain")
     public List<Alignment> postResidueMappingByPDB(
-            @ApiParam(required = true, value = "Input id_type: ensembl; uniprot; uniprot_isoform;\n hgvs-grch37; hgvs-grch38; dbSNP_ID") @PathVariable String id_type,
+            @ApiParam(required = true, value = "Input id_type: ensembl; uniprot; uniprot_isoform;\n hgvs-grch37; hgvs-grch38; dbsnp") @PathVariable String id_type,
             @ApiParam(required = true, value = "Input id e.g. \n"
                     + "ensembl:ENSP00000484409.1/ENSG00000141510.16/ENST00000504290.5;\n"
                     + "uniprot:P04637/P53_HUMAN;\n" + "uniprot_isoform:P04637_9/P53_HUMAN_9;\n"
                     + "hgvs-grch37:17:g.79478130C>G;\n" + "hgvs-grch38:17:g.7676594T>G;\n"
-                    + "dbSNP_ID:rs1800369") @PathVariable String id,
+                    + "dbsnp:rs1800369") @PathVariable String id,
             @ApiParam(required = true, value = "Input PDB Id e.g. 2fej") @PathVariable String pdb_id,
             @ApiParam(required = true, value = "Input Chain e.g. A") @PathVariable String chain_id,
             @ApiParam(required = false, value = "Input Residue Positions e.g. 10,100 (Anynumber for hgvs);\n"
@@ -404,10 +404,10 @@ public class MainGetResidueMappingController {
                 }
             }
         } 
-        else if (id_type.equals("dbSNP_ID")){
+        else if (id_type.equals("dbsnp")){
         	// https://www.genomenexus.org/beta/annotation/dbsnp/rs116035550
         	// https://www.genomenexus.org/beta/annotation/dbsnp/dbSNPID
-        	System.out.println("dbSNP_ID: "+id);
+        	System.out.println("dbsnp: "+id);
         	List<Alignment> tmpList = seqController.getPdbResidueByEnsemblIddbSNPID(id);
         	for (Alignment residue : tmpList) {
                 String pd = residue.getPdbId().toLowerCase();
