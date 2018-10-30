@@ -95,23 +95,27 @@ public class UtilAPI {
      * @throws Exception
      */
     public List<GenomeResidueInput> callURLAPI(String url, boolean redundancyTag, boolean multipleTag) throws Exception{
-    	List<GenomeResidueInput> outlist = new ArrayList<GenomeResidueInput>();
-    	HashMap<String,String> hm = new HashMap<String,String>();
+        List<GenomeResidueInput> outlist = new ArrayList<GenomeResidueInput>();
+        HashMap<String, String> hm = new HashMap<String, String>();
 
         RestTemplate restTemplate = new RestTemplate();
-        
-        if(multipleTag){
-        	Quote[] quotes = restTemplate.getForObject(url, Quote[].class);
-        	for (Quote quote : quotes) {       		
-        		outlist.addAll(callURLAPIcore(url, redundancyTag,outlist, hm, quote));        		
-        	}
-        }else{
-        	Quote quote = restTemplate.getForObject(url, Quote.class);
-        	outlist.addAll(callURLAPIcore(url, redundancyTag,outlist, hm, quote));
+
+        try {
+            if (multipleTag) {
+                Quote[] quotes = restTemplate.getForObject(url, Quote[].class);
+                for (Quote quote : quotes) {
+                    outlist.addAll(callURLAPIcore(url, redundancyTag, outlist, hm, quote));
+                }
+            } else {
+                Quote quote = restTemplate.getForObject(url, Quote.class);
+                outlist.addAll(callURLAPIcore(url, redundancyTag, outlist, hm, quote));
+            }
+            hm = null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        hm = null;
-        
-        return outlist;        
+
+        return outlist;       
     }
     
     
