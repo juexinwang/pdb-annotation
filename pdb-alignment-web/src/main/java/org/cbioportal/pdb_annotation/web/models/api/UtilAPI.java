@@ -112,6 +112,7 @@ public class UtilAPI {
             }
             hm = null;
         } catch (Exception ex) {
+            //Once get error from calling upstream API from cbioportal or ensembl, using try/catch to catch this error and return [], otherwise will get 500 error finally
             ex.printStackTrace();
         }
 
