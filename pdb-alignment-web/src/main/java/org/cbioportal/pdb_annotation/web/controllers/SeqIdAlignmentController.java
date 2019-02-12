@@ -1,7 +1,5 @@
 package org.cbioportal.pdb_annotation.web.controllers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -162,9 +160,10 @@ public class SeqIdAlignmentController {
         List<Alignment> it = alignmentRepository.findBySeqId(seqId);
         List<Alignment> outit = new ArrayList<Alignment>();
         int inputAA = Integer.parseInt(position);
-        int seqGapCount = 0;
-        int pdbGapCount = 0;
+        
         for (Alignment ali : it) {
+            int seqGapCount = 0;
+            int pdbGapCount = 0;
             if (inputAA >= ali.getSeqFrom() && inputAA <= ali.getSeqTo()) {
                 ResidueMapping rp = new ResidueMapping();
                 List<ResidueMapping> residueMapping = new ArrayList<ResidueMapping>();
