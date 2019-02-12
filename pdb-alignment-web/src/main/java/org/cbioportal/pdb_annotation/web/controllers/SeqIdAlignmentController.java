@@ -1,5 +1,7 @@
 package org.cbioportal.pdb_annotation.web.controllers;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -101,13 +103,14 @@ public class SeqIdAlignmentController {
             @ApiParam(required = true, value = "Input SeqId e.g. 25625") @PathVariable String seqId) {
         List<Alignment> it = alignmentRepository.findBySeqId(seqId);
         List<Alignment> outit = new ArrayList<Alignment>();
-        // count "-" in genSequence
-        int seqGapCount = 0;
-        // count "-" in pdbSequence
-        int pdbGapCount = 0;
+        
 
         for (Alignment ali : it) {
             List<ResidueMapping> residueMapping = new ArrayList<ResidueMapping>();
+            // count "-" in genSequence
+            int seqGapCount = 0;
+            // count "-" in pdbSequence
+            int pdbGapCount = 0;
             for (int inputAA = ali.getSeqFrom(); inputAA <= ali.getSeqTo(); inputAA++) {
                 ResidueMapping rp = new ResidueMapping();
 
@@ -205,12 +208,13 @@ public class SeqIdAlignmentController {
             @ApiParam(required = true, value = "Input Residue Position e.g. 99,100") @PathVariable List<String> positionList) {
         List<Alignment> it = alignmentRepository.findBySeqId(seqId);
         List<Alignment> outit = new ArrayList<Alignment>();
-        int seqGapCount = 0;
-        int pdbGapCount = 0;
+
 
         for (Alignment ali : it) {
 
             List<ResidueMapping> residueMapping = new ArrayList<ResidueMapping>();
+            int seqGapCount = 0;
+            int pdbGapCount = 0;
 
             for (String position : positionList) {
                 int inputAA = Integer.parseInt(position);
@@ -225,6 +229,7 @@ public class SeqIdAlignmentController {
                         continue;
                     }
                     if (rp.getPdbAminoAcid().equals("-")) {
+                        System.out.println(rp.getPdbAminoAcid());
                         pdbGapCount++;
                         continue;
                     }
@@ -237,7 +242,6 @@ public class SeqIdAlignmentController {
                     if (!rp.getPdbAminoAcid().equals("X")) {
                         residueMapping.add(rp);
                     }
-
                 }
             }
 

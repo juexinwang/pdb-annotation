@@ -304,8 +304,8 @@ public class MainGetResidueMappingController {
                 }
 
             } else if (id.split("_").length == 2) {// ID: P53_HUMAN
-
-		List<Alignment> list = null;
+                //**
+                List<Alignment> list = null;
                 if (positionList == null) {
                     list = seqController.getPdbResidueByUniprotIdIso(id,"1");
                 } else {
